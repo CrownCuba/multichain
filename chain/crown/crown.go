@@ -45,7 +45,7 @@ var (
 		DefaultPort: "9340",
 		DNSSeeds: []chaincfg.DNSSeed{
 			{Host: "dnsseed1.crowncoin.org", HasFiltering: false},
-			{Host: "dnsseed2.crowncoin.net", HasFiltering: false},
+			{Host: "dnsseed2.crowncoin.org", HasFiltering: false},
 		},
 		GenesisBlock:             &genBlock,
 		GenesisHash:              &genBlockHash,
