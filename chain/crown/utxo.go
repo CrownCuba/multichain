@@ -21,8 +21,8 @@ type TxBuilder struct {
 	params *ChainParams
 }
 
-func NewTxBuilder(params *ChainParams) CrwTxBuilder {
-	return CrwTxBuilder{params: params}
+func NewTxBuilder(params *ChainParams) xBuilder {
+	return TxBuilder{params: params}
 }
 
 func (txBuilder CrwTxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
