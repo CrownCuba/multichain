@@ -129,6 +129,6 @@ services:
     build:
       context: ./crown
     ports:
-      - "0.0.0.0:9341:9341"
+      - "0.0.0.0:19445:19445"
     entrypoint:
       - "./root/run.sh"
