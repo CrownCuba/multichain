@@ -1,3 +1,3 @@
 # Start
-/app/bin/bitcoind
+/app/bin/crownd -regtest
 sleep 10
