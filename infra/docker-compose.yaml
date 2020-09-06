@@ -121,3 +121,14 @@ services:
     entrypoint:
       - "./root/run.sh"
       - "${TERRA_ADDRESS}"
+
+  ##
+  ## Crown
+  ##
+  crown:
+    build:
+      context: ./crown
+    ports:
+      - "0.0.0.0:9341:9341"
+    entrypoint:
+      - "./root/run.sh"
