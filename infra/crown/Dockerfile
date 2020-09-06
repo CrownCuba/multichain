@@ -8,7 +8,7 @@ RUN apt-get install --yes wget
 # This can sometimes stall, which can be fixed by killing and restarting the
 # build.
 
-RUN wget -c https://github.com/Crowndev/crown-core/releases/download/v0.14.0.2-Emerald/Crown-0.14.0.2-Linux64.zip | unzip -a Crown-0.14.0.2-Linux64
+RUN wget -c https://github.com/Crowndev/crown-core/releases/download/v0.14.0.2-Emerald/Crown-0.14.0.2-Linux64.zip && unzip -a Crown-0.14.0.2-Linux64
 RUN mv ./Crown-0.14.0.2-Linux64 /app
 RUN chmod +x /app/bin/crownd
 RUN chmod +x /app/bin/crown-cli
