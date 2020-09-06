@@ -1,3 +1,3 @@
 # Start
-/app/bin/crownd -regtest
+/app/bin/crownd
 sleep 10
