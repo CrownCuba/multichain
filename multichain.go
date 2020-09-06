@@ -55,6 +55,7 @@ const (
 	BNB  = Asset("BNB")  // Binance Coin
 	BTC  = Asset("BTC")  // Bitcoin
 	CELO = Asset("CELO") // Celo
+	CRW  = Asset("CRW")  // Crown
 	DGB  = Asset("DGB")  // DigiByte
 	DOGE = Asset("DOGE") // Dogecoin
 	ETH  = Asset("ETH")  // Ether
@@ -77,6 +78,8 @@ func (asset Asset) OriginChain() Chain {
 		return Bitcoin
 	case CELO:
 		return Celo
+	case CRW:
+		return Crown
 	case DGB:
 		return DigiByte
 	case DOGE:
@@ -126,6 +129,7 @@ const (
 	Bitcoin           = Chain("Bitcoin")
 	BitcoinCash       = Chain("BitcoinCash")
 	Celo              = Chain("Celo")
+	Crown			  = Chain("Crown")
 	DigiByte          = Chain("DigiByte")
 	Dogecoin          = Chain("Dogecoin")
 	Ethereum          = Chain("Ethereum")
