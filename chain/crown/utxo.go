@@ -22,8 +22,8 @@ var (
 )
 
 type Tx struct {
-	inputs []Input
-	recipients  []Recipient
+	inputs []utxo.Input
+	recipients  []utxo.Recipient
 	msgTx *wire.MsgTx
 	params *ChainParams
 	expiryHeight uint32
