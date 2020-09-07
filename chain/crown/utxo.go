@@ -12,7 +12,6 @@ import
 )
 
 type (
-	Tx            = bitcoin.Tx
 	Client        = bitcoin.Client
 	ClientOptions = bitcoin.ClientOptions
 )
@@ -21,6 +20,15 @@ var (
 	NewClient            = bitcoin.NewClient
 	DefaultClientOptions = bitcoin.DefaultClientOptions
 )
+
+type Tx struct {
+	inputs []utxo.Input
+	recipients  []utxo.Recipient
+	msgTx *wire.MsgTx
+	params *ChainParams
+	expiryHeight uint32
+	signed bool
+}
 
 type TxBuilder struct {
 	params *ChainParams
