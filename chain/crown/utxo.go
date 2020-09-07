@@ -21,11 +21,11 @@ type TxBuilder struct {
 	params *ChainParams
 }
 
-func NewTxBuilder(params *ChainParams) xBuilder {
+func NewTxBuilder(params *ChainParams) TxBuilder {
 	return TxBuilder{params: params}
 }
 
-func (txBuilder CrwTxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
+func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
 	msgTx := wire.NewMsgTx(Version)
 
 	// Inputs
