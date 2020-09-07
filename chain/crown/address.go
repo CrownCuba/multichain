@@ -27,7 +27,7 @@ func NewAddressPubKeyHash(hash []byte, params *ChainParams) (AddressPubKeyHash, 
 	address, err := btcutil.NewAddressPubKeyHash(pkh, params.Params)
 	return AddressPubKeyHash{AddressPubKeyHash: address, params: params}, err
 }
-func NewAddressScriptHash(script []byte, params *Params) (AddressScriptHash, error) {
+func NewAddressScriptHash(script []byte, params *ChainParams) (AddressScriptHash, error) {
 	address, err := btcutil.NewAddressScriptHash(script, params.Params)
 	return AddressScriptHash{AddressScriptHash: address, params: params}, err
 }
