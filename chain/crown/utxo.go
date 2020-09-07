@@ -2,9 +2,16 @@ package crown
 
 import 
 (
+	"fmt"
+
+	"github.com/btcsuite/btcd/wire"
+	"github.com/btcsuite/btcd/txscript"
 	"github.com/renproject/multichain/chain/bitcoin"
 	"github.com/renproject/multichain/api/utxo"
 )
+
+// Version of Bitcoin transactions supported by the multichain.
+const Version int32 = 2
 
 type (
 	Tx            = bitcoin.Tx
@@ -38,7 +45,7 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 
 	// Outputs
 	for _, recipient := range recipients {
-		addr, err := DecodeAddress(string(recipient.To), txBuilder.params)
+		addr, err := DecodeAddress(string(recipient.To))
 		if err != nil {
 			return nil, err
 		}
