@@ -7,13 +7,13 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/btcsuite/btcd/chaincfg"
+	//"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcutil"
 	"github.com/renproject/id"
 	"github.com/renproject/multichain/api/address"
 	"github.com/renproject/multichain/api/utxo"
-	"github.com/renproject/multichain/chain/bitcoin"
-	"github.com/CrownCuba/multichain/chain/crown"
+	//"github.com/renproject/multichain/chain/bitcoin"
+	"github.com/renproject/multichain/chain/crown"
 	"github.com/renproject/pack"
 
 	. "github.com/onsi/ginkgo"
@@ -35,15 +35,20 @@ var _ = Describe("Crown", func() {
 				Expect(err).ToNot(HaveOccurred())
 
 				// PKH
-				pkhAddr, err := btcutil.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeCompressed()), &chaincfg.RegressionNetParams)
+				pkhAddr, err := crown.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeCompressed()), &crown.TesnetParams)
 				Expect(err).ToNot(HaveOccurred())
-				pkhAddrUncompressed, err := btcutil.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeUncompressed()), &chaincfg.RegressionNetParams)
+				pkhAddrUncompressed, err := crown.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeUncompressed()), &crown.TesnetParams)
 				Expect(err).ToNot(HaveOccurred())
 				log.Printf("PKH                %v", pkhAddr.EncodeAddress())
 				log.Printf("PKH (uncompressed) %v", pkhAddrUncompressed.EncodeAddress())
 
+				/* // WPKH
+				wpkAddr, err := btcutil.NewAddressWitnessPubKeyHash([]byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19}, &crown.TesnetParams)
+				Expect(err).ToNot(HaveOccurred())
+				log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
+
 				// Setup the client and load the unspent transaction outputs.
-				client := bitcoin.NewClient(bitcoin.DefaultClientOptions())
+				client := crown.NewClient(crown.DefaultClientOptions())
 				outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(len(outputs)).To(BeNumerically(">", 0))
@@ -77,12 +82,8 @@ var _ = Describe("Crown", func() {
 						To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
 						Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 3)),
 					},
-					{
-						To:    address.Address(wpkAddr.EncodeAddress()),
-						Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 3)),
-					},
 				}
-				tx, err := crown.NewTxBuilder(&chaincfg.RegressionNetParams).BuildTx(inputs, recipients)
+				tx, err := crown.NewTxBuilder(&crown.TesnetParams).BuildTx(inputs, recipients)
 				Expect(err).ToNot(HaveOccurred())
 
 				// Get the digests that need signing from the transaction, and
@@ -126,7 +127,7 @@ var _ = Describe("Crown", func() {
 
 				// Check that we can load the output and that it is equal.
 				// Otherwise, something strange is happening with the RPC
-				// client.
+				// client.	
 				output2, _, err = client.Output(context.Background(), output.Outpoint)
 				Expect(err).ToNot(HaveOccurred())
 				Expect(reflect.DeepEqual(output, output2)).To(BeTrue())
