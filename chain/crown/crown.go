@@ -41,7 +41,7 @@ var (
 	
 	MainParams = chaincfg.Params{
 		Name:        "mainnet",
-		Net:         "0xdfb3ebb8",
+		Net:         0xdfb3ebb8,
 		DefaultPort: "9340",
 		DNSSeeds: []chaincfg.DNSSeed{
 			{Host: "dnsseed1.crowncoin.org", HasFiltering: false},
