@@ -9,6 +9,8 @@ import
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/renproject/multichain/chain/bitcoin"
 	"github.com/renproject/multichain/api/utxo"
+	"github.com/renproject/pack"
+	"github.com/btcsuite/btcd/txscript"
 )
 
 type (
