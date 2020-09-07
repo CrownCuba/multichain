@@ -24,7 +24,7 @@ type AddressScriptHash struct {
 }
 
 func NewAddressPubKeyHash(hash []byte, params *ChainParams) (AddressPubKeyHash, error) {
-	address, err := btcutil.NewAddressPubKeyHash(pkh, params.Params)
+	address, err := btcutil.NewAddressPubKeyHash(hash, params.Params)
 	return AddressPubKeyHash{AddressPubKeyHash: address, params: params}, err
 }
 func NewAddressScriptHash(script []byte, params *ChainParams) (AddressScriptHash, error) {
@@ -64,8 +64,8 @@ func DecodeAddress(address string) (Address, error) {
 	var chsum [4]byte
 	endbody := len(decoded) - 4
 	body := decoded[:endbody]
-	copy(cksum[:], decoded[endbody:])
-	if checksum(body) != cksum {
+	copy(chsum[:], decoded[endbody:])
+	if checksum(body) != chsum {
 		return nil, base58.ErrChecksum
 	}
 	return getAddress(decoded)
@@ -84,10 +84,10 @@ func getAddress(decoded []byte) (Address, error) {
 		params = &TesnetParams
 	}
 	if bytes.Equal(prefix, params.PubKeyHashAddrIDs) {
-		return NewAddressPubKeyHash(pubHash, params)
+		return NewAddressPubKeyHash(pubHash[:], params)
 	}
 	if bytes.Equal(prefix, params.ScriptHashAddrIDs) {
-		return NewAddressScriptHash(pubHash, params)
+		return NewAddressScriptHash(pubHash[:], params)
 	}
 	return nil, errors.New("Invalid address")
 }
@@ -97,7 +97,7 @@ func getAddress(decoded []byte) (Address, error) {
 func checksum(body []byte) (chsum [4]byte) {
 	//Doble hashing the checksum
 	hash1 := sha256.Sum256(body)
-	hash2 := sha256.Sum256(hash1)
+	hash2 := sha256.Sum256(hash1[:])
 	copy(chsum[:], hash2[:4])
 	return
 }
