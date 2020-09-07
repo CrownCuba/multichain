@@ -15,38 +15,38 @@ services:
   #
   # Bitcoin Cash
   #
-  bitcoincash:
-    build:
-      context: ./bitcoincash
-    ports:
-      - "0.0.0.0:19443:19443"
-    entrypoint:
-      - "./root/run.sh"
-      - "${BITCOINCASH_ADDRESS}"
+  #bitcoincash:
+  #  build:
+  #    context: ./bitcoincash
+  #  ports:
+  #    - "0.0.0.0:19443:19443"
+  #  entrypoint:
+  #    - "./root/run.sh"
+  #    - "${BITCOINCASH_ADDRESS}"
 
   #
   # DigiByte
   #
-  digibyte:
-    build:
-      context: ./digibyte
-    ports:
-      - "0.0.0.0:20443:18443"
-    entrypoint:
-      - "/root/run.sh"
-      - "${DIGIBYTE_ADDRESS}"
+  #digibyte:
+  #  build:
+  #    context: ./digibyte
+  #  ports:
+  #    - "0.0.0.0:20443:18443"
+  #  entrypoint:
+  #    - "/root/run.sh"
+  #    - "${DIGIBYTE_ADDRESS}"
 
   #
   # Dogecoin
   #
-  dogecoin:
-    build:
-      context: ./dogecoin
-    ports:
-      - "0.0.0.0:18332:18332"
-    entrypoint:
-      - "./root/run.sh"
-      - "${DOGECOIN_ADDRESS}"
+  #dogecoin:
+  #  build:
+  #    context: ./dogecoin
+  #  ports:
+  #    - "0.0.0.0:18332:18332"
+  #  entrypoint:
+  #    - "./root/run.sh"
+  #    - "${DOGECOIN_ADDRESS}"
 
   #
   # Ethereum
@@ -64,63 +64,63 @@ services:
   #
   # Fantom
   #
-  fantom:
-    build:
-      context: ./fantom
-    ports:
-      - "0.0.0.0:18545:18545"
-    entrypoint:
-      - "./root/run.sh"
-      - "${FANTOM_MNEMONIC}"
-      - "${FANTOM_ADDRESS}"
+  #fantom:
+  #  build:
+  #    context: ./fantom
+  #  ports:
+  #    - "0.0.0.0:18545:18545"
+  #  entrypoint:
+  #    - "./root/run.sh"
+  #    - "${FANTOM_MNEMONIC}"
+  #    - "${FANTOM_ADDRESS}"
 
   #
   # Filecoin
   #
-  filecoin:
-    build:
-      context: ./filecoin
-    ports:
-      - "0.0.0.0:1234:1234"
-    entrypoint:
-      - "/root/run.sh"
+  #filecoin:
+  #  build:
+  #    context: ./filecoin
+  #  ports:
+  #    - "0.0.0.0:1234:1234"
+  #  entrypoint:
+  #    - "/root/run.sh"
 
   #
   # Solana
   #
-  solana:
-    build:
-      context: ./solana
-    ports:
-      - "0.0.0.0:8899:8899"
-      - "0.0.0.0:8900:8900"
-      - "0.0.0.0:9900:9900"
-    entrypoint:
-      - "./root/run.sh"
+  #solana:
+  #  build:
+  #    context: ./solana
+  #  ports:
+  #    - "0.0.0.0:8899:8899"
+  #    - "0.0.0.0:8900:8900"
+  #    - "0.0.0.0:9900:9900"
+  #  entrypoint:
+  #    - "./root/run.sh"
 
   #
   # Zcash
   #
-  zcash:
-    build:
-      context: ./zcash
-    ports:
-      - "0.0.0.0:18232:18232"
-    entrypoint:
-      - "./root/run.sh"
-      - "${ZCASH_ADDRESS}"
+  #zcash:
+  #  build:
+  #    context: ./zcash
+  #  ports:
+  #    - "0.0.0.0:18232:18232"
+  #  entrypoint:
+  #    - "./root/run.sh"
+  #    - "${ZCASH_ADDRESS}"
 
   ##
   ## Terra
   ##
-  terra:
-    build:
-      context: ./terra
-    ports:
-      - "0.0.0.0:26657:26657"
-    entrypoint:
-      - "./root/run.sh"
-      - "${TERRA_ADDRESS}"
+  #terra:
+  #  build:
+  #    context: ./terra
+  #  ports:
+  #    - "0.0.0.0:26657:26657"
+  #  entrypoint:
+  #    - "./root/run.sh"
+  #    - "${TERRA_ADDRESS}"
 
   ##
   ## Crown

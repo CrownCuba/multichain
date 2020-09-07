@@ -17,6 +17,7 @@ COPY crown.conf /root/.crown/
 COPY run.sh /root/
 RUN chmod +x /root/run.sh
 
+
 EXPOSE 9341
 
 ENTRYPOINT ["./root/run.sh"]
