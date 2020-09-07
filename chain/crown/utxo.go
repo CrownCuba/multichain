@@ -6,12 +6,10 @@ import
 
 	"github.com/btcsuite/btcd/wire"
 	"github.com/btcsuite/btcd/txscript"
+	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/renproject/multichain/chain/bitcoin"
 	"github.com/renproject/multichain/api/utxo"
 )
-
-// Version of Bitcoin transactions supported by the multichain.
-const Version int32 = 2
 
 type (
 	Tx            = bitcoin.Tx
@@ -33,7 +31,7 @@ func NewTxBuilder(params *ChainParams) TxBuilder {
 }
 
 func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
-	msgTx := wire.NewMsgTx(Version)
+	msgTx := wire.NewMsgTx(bitcoin.Version)
 
 	// Inputs
 	for _, input := range inputs {
