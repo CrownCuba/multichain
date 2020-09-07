@@ -3,6 +3,8 @@ package crown
 import 
 (
 	"fmt"
+	"bytes"
+	"math/big"
 
 	"github.com/btcsuite/btcd/wire"
 	"github.com/btcsuite/btcd/txscript"
@@ -11,6 +13,7 @@ import
 	"github.com/renproject/multichain/api/utxo"
 	"github.com/renproject/pack"
 	"github.com/btcsuite/btcd/txscript"
+	"github.com/btcsuite/btcd/btcec"
 )
 
 type (
