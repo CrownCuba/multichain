@@ -1,3 +1,3 @@
+#! /bin/bash
 # Start
-/app/bin/crownd
 sleep 10
