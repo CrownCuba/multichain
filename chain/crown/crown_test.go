@@ -5,7 +5,8 @@ import (
         "log"
         "os"
         "reflect"
-        "time"
+		"time"
+		"fmt"
         //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
@@ -47,7 +48,8 @@ var _ = Describe("Crown", func() {
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
  
                                 // Setup the client and load the unspent transaction outputs.
-                                client := crown.NewClient(crown.DefaultClientOptions())
+								client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://localhost:9341"))
+								fmt.Println("the client ", client)
                                 outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
