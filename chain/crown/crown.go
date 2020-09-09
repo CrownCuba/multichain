@@ -99,8 +99,8 @@ var TesnetParams = ChainParams{
 }
 var RegressionNetParams = ChainParams{
 	Params:            &RegParams,
-	PubKeyHashAddrIDs: []byte{0x01, 0x75, 0x07},
-	ScriptHashAddrIDs: []byte{0x01, 0x74, 0xF1},
+	PubKeyHashAddrIDs: []byte{0x01, 0x7A, 0xCD, 0x67},
+	ScriptHashAddrIDs: []byte{0x01, 0x7A, 0xCD, 0x51},
 }
 
 func strToHash(Str string) *chainhash.Hash {
