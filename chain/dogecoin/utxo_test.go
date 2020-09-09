@@ -1,1 +1,0 @@
-package dogecoin_test
