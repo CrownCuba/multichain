@@ -38,7 +38,7 @@ var (
 			Nonce:      1612467894,
 		},
 	}
-	
+
 	MainParams = chaincfg.Params{
 		Name:        "mainnet",
 		Net:         0xdfb3ebb8,
@@ -52,7 +52,7 @@ var (
 		TargetTimespan:           time.Hour * 24 * 14, //two weeks
 		TargetTimePerBlock:       time.Minute,
 		SubsidyReductionInterval: 2100000,
-		Checkpoints: []chaincfg.Checkpoint{	
+		Checkpoints: []chaincfg.Checkpoint{
 			{Height: 0, Hash: strToHash("0000000085370d5e122f64f4ab19c68614ff3df78c8d13cb814fd7e69a1dc6da")},
 			{Height: 100000, Hash: strToHash("000000000001f9595f38d13a62f030c877717db91659157eb732e2a89c8f9c1d")},
 			{Height: 200000, Hash: strToHash("000000000000e0438b3279cecc380a96c8a7b40bceb94fc03d0a210fdda2b959")},
@@ -74,12 +74,18 @@ var (
 		DefaultPort:              "19340",
 		GenesisBlock:             &genBlock,
 		GenesisHash:              &genBlockHash,
-		TargetTimespan:           time.Hour * 48,
+		TargetTimespan:           time.Hour * 24 * 14,
 		TargetTimePerBlock:       time.Second * 90,
 		SubsidyReductionInterval: 130000,
 		PrivateKeyID:             239,
 	}
-
+	RegParams = chaincfg.Params{
+		Name:                     "regtest",
+		DefaultPort:              "19445",
+		TargetTimespan:           time.Hour * 48,
+		TargetTimePerBlock:       time.Second * 60,
+		SubsidyReductionInterval: 150,
+	}
 )
 var MainNetParams = ChainParams{
 	Params:            &MainParams,
@@ -87,14 +93,20 @@ var MainNetParams = ChainParams{
 	ScriptHashAddrIDs: []byte{0x01, 0x74, 0xF1},
 }
 var TesnetParams = ChainParams{
-	Params: &TestParams,
-	PubKeyHashAddrIDs: []byte{0x01,0x7A,0xCD,0x67},
-	ScriptHashAddrIDs: []byte{0x01,0x7A,0xCD,0x51},
+	Params:            &TestParams,
+	PubKeyHashAddrIDs: []byte{0x01, 0x7A, 0xCD, 0x67},
+	ScriptHashAddrIDs: []byte{0x01, 0x7A, 0xCD, 0x51},
 }
+var RegressionNetParams = ChainParams{
+	Params:            &RegParams,
+	PubKeyHashAddrIDs: []byte{0x01, 0x75, 0x07},
+	ScriptHashAddrIDs: []byte{0x01, 0x74, 0xF1},
+}
+
 func strToHash(Str string) *chainhash.Hash {
 	hash, err := chainhash.NewHashFromStr(Str)
 	if err != nil {
-		panic(err)		
+		panic(err)
 	}
 	return hash
 }
