@@ -132,3 +132,5 @@ services:
       - "0.0.0.0:9341:9341"
     entrypoint:
       - "./root/run.sh"
+      - "${CROWN_ADDRESS}"
+      - "${CROWN_PK}"

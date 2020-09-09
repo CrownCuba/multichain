@@ -1,12 +1,12 @@
 package crown_test
- 
+
 import (
         "context"
         "log"
         "os"
         "reflect"
-		"time"
-		"fmt"
+        "time"
+        "fmt"
         //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
@@ -15,9 +15,8 @@ import (
         //"github.com/renproject/multichain/chain/bitcoin"
         "github.com/renproject/multichain/chain/crown"
         "github.com/renproject/pack"
- 
-        . "github.com/onsi/ginkgo"
-        . "github.com/onsi/gomega"
+        ."github.com/onsi/ginkgo"
+        ."github.com/onsi/gomega"
 )
  
 var _ = Describe("Crown", func() {
@@ -48,13 +47,13 @@ var _ = Describe("Crown", func() {
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
  
                                 // Setup the client and load the unspent transaction outputs.
-								client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://0.0.0.0:9341"))
-								fmt.Println("the client ", client)
+				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:9341"))
                                 outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
+				fmt.Println("the outputs ", outputs)
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
                                 output := outputs[0]
- 
+
                                 // Check that we can load the output and that it is equal.
                                 // Otherwise, something strange is happening with the RPC
                                 // client.
