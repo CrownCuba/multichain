@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+python2.7 /app/scripts/sandbox.py -d=/app/sandbox/ -b=/app/bin/ -f=/app/scripts/devnet-template.json.in "$@"

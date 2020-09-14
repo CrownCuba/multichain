@@ -47,9 +47,9 @@ var _ = Describe("Crown", func() {
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
  
                                 // Setup the client and load the unspent transaction outputs.
-				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:9341"))
+				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:8080").WithUser("user").WithPassword("bogus"))
                                 outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
-				fmt.Println("the outputs ", outputs)
+				fmt.Println("the address ", address.Address(pkhAddr.EncodeAddress()))
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
                                 output := outputs[0]
