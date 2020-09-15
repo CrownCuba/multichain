@@ -6,7 +6,7 @@ import (
         "os"
         "reflect"
         "time"
-        "fmt"
+        //"fmt"
         //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
@@ -45,11 +45,11 @@ var _ = Describe("Crown", func() {
                                 wpkAddr, err := btcutil.NewAddressWitnessPubKeyHash([]byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19}, &crown.MainNetParams)
                                 Expect(err).ToNot(HaveOccurred())
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
- 
+
                                 // Setup the client and load the unspent transaction outputs.
-				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:8080").WithUser("user").WithPassword("bogus"))
+				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:43004").WithUser("user").WithPassword("bogus"))
                                 outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
-				fmt.Println("the address ", address.Address(pkhAddr.EncodeAddress()))
+				// fmt.Println("the address ", address.Address(pkhAddr.EncodeAddress()))
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
                                 output := outputs[0]

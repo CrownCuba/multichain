@@ -5,8 +5,8 @@
 #echo "OOOOOOeEEEEEEEEE CROWN_ADDRESS=$ADDRESS"
 #echo "PRIVATE_KEY=$PK"
 # Prepare the directory
-python2.7 /app/scripts/sandbox.py -d=/app/sandbox/ -b=/app/bin/ -f=/app/scripts/devnet-template.json.in prepare
-python3.5 /app/scripts/addRpcUserRpcAllow.py /app/sandbox/
+#python2.7 /app/scripts/sandbox.py -d=/app/sandbox/ -b=/app/bin/ -f=/app/scripts/devnet-template.json.in prepare
+#python3.5 /app/scripts/addRpcUserRpcAllow.py /app/sandbox/
 # Run the directory
 python2.7 /app/scripts/sandbox.py -d=/app/sandbox/ -b=/app/bin/ -f=/app/scripts/devnet-template.json.in start
 
