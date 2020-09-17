@@ -104,6 +104,7 @@ func (tx *Tx) Sighashes() ([]pack.Bytes32, error) {
 }
 
 func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
+	fmt.Println("En el utxo.go de crown ", tx)
 	if tx.signed {
 		return fmt.Errorf("already signed")
 	}
@@ -154,11 +155,12 @@ func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
 	return nil
 }
 
-func (tx *Tx) Serialize() (pack.Bytes, error) {
+func (tx *Tx) Serialize() (pack.Bytes, error) {	
 	buf := new(bytes.Buffer)
 	if err := tx.msgTx.Serialize(buf); err != nil {
 		return pack.Bytes{}, err
 	}
+	fmt.Println("En el serialize de utxo.go crown ", tx.msgTx)
 	return pack.NewBytes(buf.Bytes()), nil
 }
 
@@ -187,7 +189,7 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 		if err != nil {
 			return nil, err
 		}
-		script, err := txscript.PayToAddrScript(addr)
+		script, err := txscript.PayToAddrScript(addr.BitcoinAddress())
 		if err != nil {
 			return nil, err
 		}
@@ -200,3 +202,7 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 
 	return &Tx{inputs: inputs, recipients: recipients, msgTx: msgTx, signed: false}, nil
 }
+
+/* func (client *client) getNewAddress() (string, error) {
+	addr, err:= client.send(ctx, &resp, "listunspent", minConf, maxConf, []string{string(addr)})
+} */

@@ -1,5 +1,5 @@
 #!/bin/bash
-ADDRESS=$1
+ADDRESS=mwjUmhAW68zCtgZpW5b1xD5g7MZew6xPV4
 
 # Start
 /app/bin/bitcoind
@@ -20,3 +20,4 @@ do
     /app/bin/bitcoin-cli generatetoaddress 1 $ADDRESS
     sleep 10
 done
+

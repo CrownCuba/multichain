@@ -6,7 +6,7 @@ import (
         "os"
         "reflect"
         "time"
-        //"fmt"
+        "fmt"
         //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
@@ -47,9 +47,8 @@ var _ = Describe("Crown", func() {
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
 
                                 // Setup the client and load the unspent transaction outputs.
-				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:43004").WithUser("user").WithPassword("bogus"))
+				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:43001").WithUser("user").WithPassword("bogus"))
                                 outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
-				// fmt.Println("the address ", address.Address(pkhAddr.EncodeAddress()))
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
                                 output := outputs[0]
@@ -85,8 +84,8 @@ var _ = Describe("Crown", func() {
 									}
                                        
                                 tx, err := crown.NewTxBuilder(&crown.MainNetParams).BuildTx(inputs, recipients)
+                                fmt.Println("The tx ", tx)
                                 Expect(err).ToNot(HaveOccurred())
- 
                                 // Get the digests that need signing from the transaction, and
                                 // sign them. In production, this would be done using the RZL
                                 // MPC algorithm, but for the purposes of this test, using an
@@ -101,12 +100,14 @@ var _ = Describe("Crown", func() {
                                         Expect(err).ToNot(HaveOccurred())
                                         signatures[i] = pack.NewBytes65(signature)
                                 }
+                                fmt.Println("Every single sign ", signatures)
                                 Expect(tx.Sign(signatures, pack.NewBytes(wif.SerializePubKey()))).To(Succeed())
- 
+
                                 // Submit the transaction to the crown node. Again, this
                                 // should be running a la `./multichaindeploy`.
                                 txHash, err := tx.Hash()
                                 Expect(err).ToNot(HaveOccurred())
+                                fmt.Println("The tx en el crown_test", tx)
                                 err = client.SubmitTx(context.Background(), tx)
                                 Expect(err).ToNot(HaveOccurred())
                                 log.Printf("TXID               %v", txHash)

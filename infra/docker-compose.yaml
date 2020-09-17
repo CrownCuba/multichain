@@ -129,7 +129,7 @@ services:
     build:
       context: ./crown
     ports:
-      - "43004:43004"
+      - "43001:43001"
     entrypoint:
       - "./root/run.sh"
       - "${CROWN_ADDRESS}"

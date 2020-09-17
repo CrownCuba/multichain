@@ -10,9 +10,9 @@ RUN curl https://bitcoincore.org/bin/bitcoin-core-0.19.1/bitcoin-0.19.1-x86_64-l
 RUN mv ./bitcoin-0.19.1 /app
 RUN chmod +x /app/bin/bitcoind
 RUN chmod +x /app/bin/bitcoin-cli
+COPY run.sh /root/
 
 COPY bitcoin.conf /root/.bitcoin/
-COPY run.sh /root/
 RUN chmod +x /root/run.sh
 
 EXPOSE 18443
