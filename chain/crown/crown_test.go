@@ -6,7 +6,6 @@ import (
         "os"
         "reflect"
         "time"
-        "fmt"
         //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
@@ -18,7 +17,10 @@ import (
         ."github.com/onsi/ginkgo"
         ."github.com/onsi/gomega"
 )
- 
+
+var (
+        fee = pack.NewU64(100000)
+)
 var _ = Describe("Crown", func() {
         Context("when submitting transactions", func() {
                 Context("when sending CRW to multiple addresses", func() {
@@ -34,9 +36,13 @@ var _ = Describe("Crown", func() {
                                 Expect(err).ToNot(HaveOccurred())
 								
                                 // PKH
-                                pkhAddr, err := crown.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeCompressed()), &crown.MainNetParams)
+                                pkhAddr, err := crown.NewAddressPubKeyHash(btcutil.
+                                        Hash160(wif.PrivKey.PubKey().SerializeCompressed()),
+                                        &crown.MainNetParams)
                                 Expect(err).ToNot(HaveOccurred())
-                                pkhAddrUncompressed, err := crown.NewAddressPubKeyHash(btcutil.Hash160(wif.PrivKey.PubKey().SerializeUncompressed()), &crown.MainNetParams)
+                                pkhAddrUncompressed, err := crown.NewAddressPubKeyHash(btcutil.
+                                        Hash160(wif.PrivKey.PubKey().SerializeUncompressed()),
+                                        &crown.MainNetParams)
                                 Expect(err).ToNot(HaveOccurred())
                                 log.Printf("PKH                %v", pkhAddr.EncodeAddress())
                                 log.Printf("PKH (uncompressed) %v", pkhAddrUncompressed.EncodeAddress())
@@ -47,8 +53,11 @@ var _ = Describe("Crown", func() {
                                 log.Printf("WPKH               %v", wpkAddr.EncodeAddress()) */
 
                                 // Setup the client and load the unspent transaction outputs.
-				client := crown.NewClient(crown.DefaultClientOptions().WithHost("http://127.0.0.1:43001").WithUser("user").WithPassword("bogus"))
-                                outputs, err := client.UnspentOutputs(context.Background(), 0, 999999999, address.Address(pkhAddr.EncodeAddress()))
+                                client := crown.NewClient(crown.DefaultClientOptions().
+                                WithHost("http://127.0.0.1:43001").WithUser("user").WithPassword("bogus"))
+                                outputs, err := client.UnspentOutputs(context.
+                                        Background(), 0, 999999999,
+                                        address.Address(pkhAddr.EncodeAddress()))
                                 Expect(err).ToNot(HaveOccurred())
                                 Expect(len(outputs)).To(BeNumerically(">", 0))
                                 output := outputs[0]
@@ -75,16 +84,14 @@ var _ = Describe("Crown", func() {
                                 recipients := []utxo.Recipient{
                                         {
                                                 To:    address.Address(pkhAddr.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 3)),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - fee ),
                                         },
                                         {
                                                 To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 3)),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2)),
 										},
 									}
-                                       
                                 tx, err := crown.NewTxBuilder(&crown.MainNetParams).BuildTx(inputs, recipients)
-                                fmt.Println("The tx ", tx)
                                 Expect(err).ToNot(HaveOccurred())
                                 // Get the digests that need signing from the transaction, and
                                 // sign them. In production, this would be done using the RZL
@@ -100,14 +107,12 @@ var _ = Describe("Crown", func() {
                                         Expect(err).ToNot(HaveOccurred())
                                         signatures[i] = pack.NewBytes65(signature)
                                 }
-                                fmt.Println("Every single sign ", signatures)
                                 Expect(tx.Sign(signatures, pack.NewBytes(wif.SerializePubKey()))).To(Succeed())
 
                                 // Submit the transaction to the crown node. Again, this
                                 // should be running a la `./multichaindeploy`.
                                 txHash, err := tx.Hash()
                                 Expect(err).ToNot(HaveOccurred())
-                                fmt.Println("The tx en el crown_test", tx)
                                 err = client.SubmitTx(context.Background(), tx)
                                 Expect(err).ToNot(HaveOccurred())
                                 log.Printf("TXID               %v", txHash)
