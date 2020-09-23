@@ -6,21 +6,16 @@ import (
         "os"
         "reflect"
         "time"
-        //"github.com/btcsuite/btcd/chaincfg"
         "github.com/btcsuite/btcutil"
         "github.com/renproject/id"
         "github.com/renproject/multichain/api/address"
         "github.com/renproject/multichain/api/utxo"
-        //"github.com/renproject/multichain/chain/bitcoin"
         "github.com/renproject/multichain/chain/crown"
         "github.com/renproject/pack"
         ."github.com/onsi/ginkgo"
         ."github.com/onsi/gomega"
 )
 
-var (
-        fee = pack.NewU64(100000)
-)
 var _ = Describe("Crown", func() {
         Context("when submitting transactions", func() {
                 Context("when sending CRW to multiple addresses", func() {
