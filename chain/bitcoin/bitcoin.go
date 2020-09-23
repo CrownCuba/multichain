@@ -138,9 +138,7 @@ func (client *client) Output(ctx context.Context, outpoint utxo.Outpoint) (utxo.
 
 // SubmitTx to the Bitcoin network.
 func (client *client) SubmitTx(ctx context.Context, tx utxo.Tx) error {
-	fmt.Println("The tx en el Submit de bitcoin.go ANTES DEL SERIALIZE ", tx)
 	serial, err := tx.Serialize()
-	fmt.Println("The tx en el Submit de bitcoin.go", tx)
 	if err != nil {
 		return fmt.Errorf("bad tx: %v", err)
 	}
