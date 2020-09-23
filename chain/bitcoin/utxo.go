@@ -151,7 +151,7 @@ func (tx *Tx) Sighashes() ([]pack.Bytes32, error) {
 }
 
 func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
-	fmt.Println("En el utxo de bitcoin.go en el Sign", tx)
+	("En el utxo de bitcoin.go en el Sign", tx)
 	if tx.signed {
 		return fmt.Errorf("already signed")
 	}
@@ -207,6 +207,6 @@ func (tx *Tx) Serialize() (pack.Bytes, error) {
 	if err := tx.msgTx.Serialize(buf); err != nil {
 		return pack.Bytes{}, err
 	}
-	fmt.Println("En el utxo.go de bitcoin.go en el Serialize", tx.msgTx)
+	("En el utxo.go de bitcoin.go en el Serialize", tx.msgTx)
 	return pack.NewBytes(buf.Bytes()), nil
 }

@@ -97,7 +97,7 @@ func (tx *Tx) Sighashes() ([]pack.Bytes32, error) {
 	return sighashes, nil
 }
 func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
-	fmt.Println("En el utxo.go de crown ", tx)
+	("En el utxo.go de crown ", tx)
 	if tx.signed {
 		return fmt.Errorf("already signed")
 	}
@@ -153,8 +153,8 @@ func (tx *Tx) Serialize() (pack.Bytes, error) {
 	if err := tx.msgTx.Serialize(buf); err != nil {
 		return pack.Bytes{}, err
 	}
-	fmt.Println("=========================")
-	fmt.Println("En el serialize de utxo.go crown ", pack.NewBytes(buf.Bytes()))
+	("=========================")
+	("En el serialize de utxo.go crown ", pack.NewBytes(buf.Bytes()))
 	return pack.NewBytes(buf.Bytes()), nil
 }
 
@@ -168,14 +168,14 @@ func NewTxBuilder(params *ChainParams) TxBuilder {
 
 func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
 	msgTx := wire.NewMsgTx(Version)
-	fmt.Println("=============================================")
-	fmt.Println("En el BuildTx crown.go inputs", inputs)
-	fmt.Println("En el BuildTx crown.go recipients", recipients)
-	fmt.Println("En el BuildTx crown.go intial msgTx", msgTx)
+	("=============================================")
+	("En el BuildTx crown.go inputs", inputs)
+	("En el BuildTx crown.go recipients", recipients)
+	("En el BuildTx crown.go intial msgTx", msgTx)
 	// Inputs
 	for _, input := range inputs {
 		hash := chainhash.Hash{}
-		fmt.Println("En el BuildTx crown.go each input hash", input.Hash.String())
+		("En el BuildTx crown.go each input hash", input.Hash.String())
 		copy(hash[:], input.Hash)
 		index := input.Index.Uint32()
 		msgTx.AddTxIn(wire.NewTxIn(wire.NewOutPoint(&hash, index), nil, nil))
@@ -184,12 +184,12 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 	// Outputs
 	for _, recipient := range recipients {
 		addr, err := DecodeAddress(string(recipient.To))
-		fmt.Println("En el BuildTx crown.go current addr", addr)
+		("En el BuildTx crown.go current addr", addr)
 		if err != nil {
 			return nil, err
 		}
 		script, err := txscript.PayToAddrScript(addr.BitcoinAddress())
-		fmt.Println("En el BuildTx crown.go current script", string(script))
+		("En el BuildTx crown.go current script", string(script))
 		if err != nil {
 			return nil, err
 		}
@@ -197,11 +197,11 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 		if value < 0 {
 			return nil, fmt.Errorf("expected value >= 0, got value %v", value)
 		}
-		fmt.Println("En el BuildTx crown.go current value", value)
+		("En el BuildTx crown.go current value", value)
 		msgTx.AddTxOut(wire.NewTxOut(value, script))
-		fmt.Println("En el BuildTx crown.go each change of msgTx", msgTx)
+		("En el BuildTx crown.go each change of msgTx", msgTx)
 	}
-	fmt.Println("=============================================")
+	("=============================================")
 	return &Tx{inputs: inputs, recipients: recipients, msgTx: msgTx, signed: false}, nil
 }
 

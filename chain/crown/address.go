@@ -59,7 +59,7 @@ func encode(hash, prefix []byte) string {
 func DecodeAddress(address string) (Address, error) {
 	var decoded = base58.Decode(address)
 	if len(decoded) != 27 && len(decoded) != 28 {
-		fmt.Println("Inside the error " , address)
+		("Inside the error " , address)
 		return nil, base58.ErrInvalidFormat
 	}
 	var chsum [4]byte
