@@ -79,7 +79,7 @@ var _ = Describe("Crown", func() {
                                 recipients := []utxo.Recipient{
                                         {
                                                 To:    address.Address(pkhAddr.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - fee ),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - crown.Fee ),
                                         },
                                         {
                                                 To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
