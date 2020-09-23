@@ -6,4 +6,6 @@ import (
 )
 type GasEstimator = bitcoin.GasEstimator
 
-var fee = pack.NewU64(100000)
+// Fixed fee amount since Crown doesn't allows too high fees
+
+var Fee = pack.NewU64(100000)

@@ -15,7 +15,6 @@ import
 	"github.com/btcsuite/btcd/btcec"
 )
 
-const Version = 1
 type (
 	Client        = bitcoin.Client
 	ClientOptions = bitcoin.ClientOptions
@@ -25,6 +24,14 @@ var (
 	NewClient            = bitcoin.NewClient
 	DefaultClientOptions = bitcoin.DefaultClientOptions
 )
+
+
+// Version of Crown transactions supported by the multichain.
+
+const Version = 1
+
+// Tx represents a simple Crown transaction that implements the Bitcoin Compat
+// API.
 
 type Tx struct {
 	inputs []utxo.Input
@@ -65,7 +72,8 @@ func (tx *Tx) Outputs() ([]utxo.Output, error) {
 }
 
 // Sighashes returns the digests that must be signed before the transaction
-// can be submitted by the client. All transactions assume that the f
+// can be submitted by the client.
+
 func (tx *Tx) Sighashes() ([]pack.Bytes32, error) {
 	sighashes := make([]pack.Bytes32, len(tx.inputs))
   
@@ -96,6 +104,9 @@ func (tx *Tx) Sighashes() ([]pack.Bytes32, error) {
   
 	return sighashes, nil
 }
+
+// Signs the built transaction.
+
 func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
 	if tx.signed {
 		return fmt.Errorf("already signed")
@@ -114,23 +125,10 @@ func (tx *Tx) Sign(signatures []pack.Bytes65, pubKey pack.Bytes) error {
 			R: r,
 			S: s,
 		}
-		//pubKeyScript := tx.inputs[i].Output.PubKeyScript
+
 		sigScript := tx.inputs[i].SigScript
 
-		// Support segwit.
-		/* if sigScript == nil {
-			if txscript.IsPayToWitnessPubKeyHash(pubKeyScript) || txscript.IsPayToWitnessScriptHash(pubKeyScript) {
-				tx.msgTx.TxIn[i].Witness = wire.TxWitness([][]byte{append(signature.Serialize(), byte(txscript.SigHashAll)), pubKey})
-				continue
-			}
-		} else {
-			if txscript.IsPayToWitnessScriptHash(sigScript) || txscript.IsPayToWitnessScriptHash(sigScript) {
-				tx.msgTx.TxIn[i].Witness = wire.TxWitness([][]byte{append(signature.Serialize(), byte(txscript.SigHashAll)), pubKey, sigScript})
-				continue
-			}
-		} */
-
-		// Support non-segwit
+		// Support non-segwit Crown desn't have segwit and it's not needed
 		builder := txscript.NewScriptBuilder()
 		builder.AddData(append(signature.Serialize(), byte(txscript.SigHashAll)))
 		builder.AddData(pubKey)
@@ -159,9 +157,18 @@ type TxBuilder struct {
 	params *ChainParams
 }
 
+// NewTxBuilder returns a transaction builder that builds UTXO-compatible
+// Crown transactions for the given chain configuration.
+
 func NewTxBuilder(params *ChainParams) TxBuilder {
 	return TxBuilder{params: params}
 }
+
+// BuildTx returns a Crown transaction that consumes funds from the given
+// inputs, and sends them to the given recipients. The fee is paid to
+// the Crown network is fixed to 0.01 CRW since the network doesn't accepts high fees.
+// Outputs produced for recipients will use P2PKH, P2SH
+// scripts as the pubkey script, based on the format of the recipient address.
 
 func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipient) (utxo.Tx, error){
 	msgTx := wire.NewMsgTx(Version)
@@ -191,7 +198,3 @@ func (txBuilder TxBuilder) BuildTx(inputs []utxo.Input, recipients []utxo.Recipi
 	}
 	return &Tx{inputs: inputs, recipients: recipients, msgTx: msgTx, signed: false}, nil
 }
-
-/* func (client *client) getNewAddress() (string, error) {
-	addr, err:= client.send(ctx, &resp, "listunspent", minConf, maxConf, []string{string(addr)})
-} */
