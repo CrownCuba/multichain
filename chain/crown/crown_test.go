@@ -16,6 +16,10 @@ import (
         ."github.com/onsi/gomega"
 )
 
+var (
+        fee := pack.NewU64(10000)
+)
+
 var _ = Describe("Crown", func() {
         Context("when submitting transactions", func() {
                 Context("when sending CRW to multiple addresses", func() {
@@ -79,7 +83,7 @@ var _ = Describe("Crown", func() {
                                 recipients := []utxo.Recipient{
                                         {
                                                 To:    address.Address(pkhAddr.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - crown.Gas ),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - fee ),
                                         },
                                         {
                                                 To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
