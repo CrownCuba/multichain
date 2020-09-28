@@ -6,7 +6,6 @@ import (
 	"os"
 	"reflect"
 	"time"
-	"fmt"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcutil"
 	"github.com/renproject/id"
@@ -87,7 +86,6 @@ var _ = Describe("Bitcoin", func() {
 					},
 				}
 				tx, err := bitcoin.NewTxBuilder(&chaincfg.RegressionNetParams).BuildTx(inputs, recipients)
-				("El tx en bitcoin_test ", tx)
 				Expect(err).ToNot(HaveOccurred())
 
 				// Get the digests that need signing from the transaction, and
@@ -130,7 +128,6 @@ var _ = Describe("Bitcoin", func() {
 				}
 				// Check that we can load the output and that it is equal.
 				// Otherwise, something strange is happening with the RPC
-				("Bitcoin_tes el output2 ", output2)
 				// client.
 				output2, _, err = client.Output(context.Background(), output.Outpoint)
 				Expect(err).ToNot(HaveOccurred())

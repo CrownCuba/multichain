@@ -16,6 +16,10 @@ import (
         ."github.com/onsi/gomega"
 )
 
+/* const (
+        fee := pack.NewU64(1000) 
+) */
+
 var _ = Describe("Crown", func() {
         Context("when submitting transactions", func() {
                 Context("when sending CRW to multiple addresses", func() {
@@ -23,6 +27,7 @@ var _ = Describe("Crown", func() {
                                 // Load private key, and assume that the associated address has
                                 // funds to spend. You can do this by setting CROWN_PK to the
                                 // value specified in the `./multichaindeploy/.env` file.
+                                fee := pack.NewU64(1000) 
                                 pkEnv := os.Getenv("CROWN_PK")
                                 if pkEnv == "" {
                                         panic("CROWN_PK is undefined")
@@ -79,7 +84,7 @@ var _ = Describe("Crown", func() {
                                 recipients := []utxo.Recipient{
                                         {
                                                 To:    address.Address(pkhAddr.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - crown.Gas ),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - fee ),
                                         },
                                         {
                                                 To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
