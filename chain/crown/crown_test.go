@@ -49,7 +49,7 @@ var _ = Describe("Crown", func() {
 
                                 // Setup the client and load the unspent transaction outputs.
                                 client := crown.NewClient(crown.DefaultClientOptions().
-                                WithHost("http://127.0.0.1:43001").WithUser("user").WithPassword("bogus"))
+                                WithHost("http://127.0.0.1:43001").WithUser("bogus").WithPassword("bogus"))
                                 outputs, err := client.UnspentOutputs(context.
                                         Background(), 0, 999999999,
                                         address.Address(pkhAddr.EncodeAddress()))
@@ -79,7 +79,7 @@ var _ = Describe("Crown", func() {
                                 recipients := []utxo.Recipient{
                                         {
                                                 To:    address.Address(pkhAddr.EncodeAddress()),
-                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - crown.Fee ),
+                                                Value: pack.NewU256FromU64(pack.NewU64((output.Value.Int().Uint64() - 1000) / 2) - crown.Gas ),
                                         },
                                         {
                                                 To:    address.Address(pkhAddrUncompressed.EncodeAddress()),
