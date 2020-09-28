@@ -1,3 +1,0 @@
-2020-09-21 02:10:58 CWallet::CreateTransaction() - InstantX requires inputs with at least 6 confirmations. Proceed as a regular transaction.
-InstantX doesn't support sending values that high yet. Transactions are currently limited to 10000 CRW.InstantX doesn't support sending values that high yet. Transactions are currently limited to 10000 CRW.2020-09-21 02:11:13 CWallet::CreateTransaction() - InstantX requires inputs with at least 6 confirmations. Proceed as a regular transaction.
-InstantX doesn't support sending values that high yet. Transactions are currently limited to 10000 CRW.InstantX doesn't support sending values that high yet. Transactions are currently limited to 10000 CRW.
